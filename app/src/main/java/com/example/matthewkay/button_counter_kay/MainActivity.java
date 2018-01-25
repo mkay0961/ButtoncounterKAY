@@ -10,7 +10,7 @@ public class MainActivity extends AppCompatActivity {
 
     public Button ResetButton, IncrementButton, DecrementButton;
     public TextView CountText;
-    public int count;
+    public int count, color;
 
 
 
@@ -28,13 +28,10 @@ public class MainActivity extends AppCompatActivity {
         ResetButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                IncrementButton.setBackgroundColor(getResources().getColor(R.color.Black));
-                DecrementButton.setBackgroundColor(getResources().getColor(R.color.Black));
-                IncrementButton.setTextColor(getResources().getColor(R.color.White));
-                DecrementButton.setTextColor(getResources().getColor(R.color.White));
-
+                color = 0;
                 CountText.setText(String.valueOf(0));
                 CheckValue();
+                Checkcolor();
 
             }
         });
@@ -45,11 +42,9 @@ public class MainActivity extends AppCompatActivity {
                 count = Integer.parseInt(countValue);
                 count++;
                 CountText.setText(String.valueOf(count));
-                IncrementButton.setBackgroundColor(getResources().getColor(R.color.Yellow));
-                DecrementButton.setBackgroundColor(getResources().getColor(R.color.Black));
-                IncrementButton.setTextColor(getResources().getColor(R.color.Black));
-                DecrementButton.setTextColor(getResources().getColor(R.color.White));
+                color = 1;
                 CheckValue();
+                Checkcolor();
 
             }
         });
@@ -59,18 +54,19 @@ public class MainActivity extends AppCompatActivity {
                 String countValue = CountText.getText().toString();
                 count = Integer.parseInt(countValue);
                 count--;
+                color = 2;
                 CountText.setText(String.valueOf(count));
-                IncrementButton.setBackgroundColor(getResources().getColor(R.color.Black));
-                DecrementButton.setBackgroundColor(getResources().getColor(R.color.Yellow));
-                DecrementButton.setTextColor(getResources().getColor(R.color.Black));
-                IncrementButton.setTextColor(getResources().getColor(R.color.White));
-
                 CheckValue();
+                Checkcolor();
             }
         });
 
         if(savedInstanceState != null){
             CountText.setText(String.valueOf(savedInstanceState.getInt("COUNTKEY")));
+            color = savedInstanceState.getInt("COLORKEY");
+            Checkcolor();
+            CheckValue();
+
         }
 
     }
@@ -79,6 +75,7 @@ public class MainActivity extends AppCompatActivity {
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putInt("COUNTKEY", count);
+        outState.putInt("COLORKEY", color);
 
     }
 
@@ -92,6 +89,35 @@ public class MainActivity extends AppCompatActivity {
         else if(Integer.parseInt(CountText.getText().toString()) == 0){
             CountText.setTextColor(getResources().getColor(R.color.White));
         }
+
+    }
+
+
+    public void Checkcolor(){
+        if(color == 0){
+            IncrementButton.setBackgroundColor(getResources().getColor(R.color.Black));
+            DecrementButton.setBackgroundColor(getResources().getColor(R.color.Black));
+            IncrementButton.setTextColor(getResources().getColor(R.color.White));
+            DecrementButton.setTextColor(getResources().getColor(R.color.White));
+
+
+        }
+        else if (color == 1){
+            IncrementButton.setBackgroundColor(getResources().getColor(R.color.Yellow));
+            DecrementButton.setBackgroundColor(getResources().getColor(R.color.Black));
+            IncrementButton.setTextColor(getResources().getColor(R.color.Black));
+            DecrementButton.setTextColor(getResources().getColor(R.color.White));
+
+
+        }
+        else if(color == 2){
+            IncrementButton.setBackgroundColor(getResources().getColor(R.color.Black));
+            DecrementButton.setBackgroundColor(getResources().getColor(R.color.Yellow));
+            DecrementButton.setTextColor(getResources().getColor(R.color.Black));
+            IncrementButton.setTextColor(getResources().getColor(R.color.White));
+
+        }
+
 
     }
 
